@@ -1,2 +1,4 @@
 .venv
 .idea
+/https_lab/pki/
+/https_lab/.pki-*/

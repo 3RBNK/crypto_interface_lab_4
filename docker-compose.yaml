@@ -1,0 +1,30 @@
+services:
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "127.0.0.1:9443:9443"
+    volumes:
+      - type: bind
+        source: ./https_lab/nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./https_lab/index.html
+        target: /usr/share/nginx/html/index.html
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: "${LAB_TLS_DIR:-./https_lab/pki}/server.crt"
+        target: /etc/nginx/tls/server.crt
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: "${LAB_TLS_DIR:-./https_lab/pki}/server.key"
+        target: /etc/nginx/tls/server.key
+        read_only: true
+        bind:
+          create_host_path: false
